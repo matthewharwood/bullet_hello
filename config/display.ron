@@ -1,0 +1,4 @@
+(
+  title: "bullet_hello",
+  dimensions: Some((500, 500)),
+)
