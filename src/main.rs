@@ -38,7 +38,7 @@ fn main() -> amethyst::Result<()> {
         )?
         .with_bundle(TransformBundle::new())?;
 
-    let mut game = Application::new(config_dir, BulletHello::default(), game_data)?;
+    let mut game = Application::build(assets_path, BulletHello::default())?.build(game_data)?;
     game.run();
 
     Ok(())
