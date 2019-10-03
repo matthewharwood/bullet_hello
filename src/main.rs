@@ -1,26 +1,29 @@
 use amethyst::{
     core::transform::TransformBundle,
-    ecs::prelude::{ReadExpect, Resources, SystemData},
+    // ecs::prelude::{ReadExpect, Resources, SystemData},
     prelude::*,
     renderer::{
         plugins::{RenderFlat2D, RenderToWindow},
         types::DefaultBackend,
         RenderingBundle,
     },
+
     utils::application_root_dir,
 };
 
-struct MyState;
+pub mod systems;
+pub mod components;
+// pub mod resources;
+mod bullet_hello;
+pub mod entities;
 
-impl SimpleState for MyState {
-    fn on_start(&mut self, _data: StateData<'_, GameData<'_, '_>>) {}
-}
+use crate::bullet_hello::BulletHello;
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
     let app_root = application_root_dir()?;
-
+    let assets_path = app_root.join("assets");
     let config_dir = app_root.join("config");
     let display_config_path = config_dir.join("display.ron");
 
@@ -35,7 +38,7 @@ fn main() -> amethyst::Result<()> {
         )?
         .with_bundle(TransformBundle::new())?;
 
-    let mut game = Application::new("/", MyState, game_data)?;
+    let mut game = Application::new(config_dir, BulletHello::default(), game_data)?;
     game.run();
 
     Ok(())
