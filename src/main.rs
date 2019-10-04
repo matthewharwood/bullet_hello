@@ -11,8 +11,8 @@ use amethyst::{
     utils::application_root_dir,
 };
 
-pub mod systems;
 pub mod components;
+pub mod systems;
 // pub mod resources;
 mod bullet_hello;
 pub mod entities;
@@ -32,7 +32,7 @@ fn main() -> amethyst::Result<()> {
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
                     RenderToWindow::from_config_path(display_config_path)
-                        .with_clear([0.34, 0.36, 0.52, 1.0]),
+                        .with_clear([1.0, 0.827, 0.098, 1.0]),
                 )
                 .with_plugin(RenderFlat2D::default()),
         )?

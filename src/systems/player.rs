@@ -1,6 +1,6 @@
 
 use amethyst::{
-    ecs::{ReadExpect, System},
+    ecs::{ReadStorage, System},
 };
 
 use crate::{
@@ -11,7 +11,7 @@ pub struct PlayerSystem;
 
 impl<'s> System<'s> for PlayerSystem {
     type SystemData = (
-        ReadExpect<'s, Player>,
+        ReadStorage<'s, Player>,
     );
 
     fn run(&mut self, player: Self::SystemData) {

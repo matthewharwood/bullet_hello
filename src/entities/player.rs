@@ -1,29 +1,32 @@
 use amethyst::{
-//  assets::Handle,
+  assets::Handle,
   core::transform::Transform,
   ecs::prelude::World,
   prelude::Builder,
-//  renderer::{
-//      SpriteRender,
-// SpriteSheet,
-//    Transparent
-//  },
+  renderer::{SpriteRender, SpriteSheet, Transparent},
 };
 
-use crate::components::Player;
-//sprite_sheet_handle: Handle<SpriteSheet>
-pub fn init_player(world: &mut World) {
-  let mut local_transform = Transform::default();
-  local_transform.set_translation_xyz(0.0, 0.0, 1.0);
+use crate::{
+  bullet_hello::{ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH},
+  components::Player,
+};
 
-  // let sprite_render = SpriteRender {
-  //   sprite_sheet: sprite_sheet_handle.clone(),
-  //   sprite_number: 0,
-  // };
+pub fn init_player(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
+  let mut local_transform = Transform::default();
+  local_transform.set_translation_xyz(
+    ARENA_MIN_X + (ARENA_WIDTH / 2.0),
+    ARENA_MIN_Y + (ARENA_HEIGHT / 6.0),
+    0.9,
+  );
+
+  let sprite_render = SpriteRender {
+    sprite_sheet: sprite_sheet_handle.clone(),
+    sprite_number: 0,
+  };
 
   world
     .create_entity()
-    // .with(sprite_render)
+    .with(sprite_render)
     .with(Player {
       width: 10.0,
       height: 10.0,
@@ -31,6 +34,6 @@ pub fn init_player(world: &mut World) {
       pos_y: 0.0,
     })
     .with(local_transform)
-//    .with(Transparent)
+    .with(Transparent)
     .build();
 }
