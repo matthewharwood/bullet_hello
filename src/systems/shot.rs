@@ -1,7 +1,9 @@
 use amethyst::{
     core::{Transform},
+    core::timing::Time,
     input::{InputHandler, StringBindings},
     ecs::{Read, WriteStorage, ReadStorage, System, Join},
+//    ecs::prelude::{Entities},
 };
 
 use crate::{
@@ -15,18 +17,14 @@ impl<'s> System<'s> for ShotSystem {
     type SystemData = (
         WriteStorage<'s, Transform>,
         ReadStorage<'s, Shot>,
-        ReadStorage<'s, Player>,
-        Read<'s, InputHandler<StringBindings>>,
+        Read<'s, Time>,
+//        Entities<'s>,
     );
 
-    fn run(&mut self, (mut transforms, shot, players, input): Self::SystemData) {
-//        for (player, transform) in (&players, &mut transforms).join() {
-//            let horizontal = input.axis_value("horizontal").unwrap_or(0.0);
-//            let vertical = input.axis_value("vertical").unwrap_or(0.0);
-//
-//            transform.move_right(horizontal);
-//            transform.move_up(vertical);
-//        }
+    fn run(&mut self, (mut transforms, shots, time): Self::SystemData) {
+        for (transform, shot) in (&mut transforms, &shots).join() {
+            transform.prepend_translation_y(shot.velocity[1] * time.delta_seconds());
+        }
     }
 }
 

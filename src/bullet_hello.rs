@@ -55,7 +55,6 @@ impl Default for BulletHello {
       dispatcher: DispatcherBuilder::new()
         .with(systems::EnemySystem, "enemy_system", &[])
         .with(systems::CloudSystem, "cloud_system", &[])
-        .with(systems::ShotSystem, "shot_system", &[])
         .build(),
     }
   }
@@ -73,7 +72,6 @@ impl SimpleState for BulletHello {
     init_player(world, sprite_sheet_handle_player.clone(), 10.0);
     init_enemy(world, sprite_sheet_handle_enemy);
     init_cloud(world, sprite_sheet_handle_cloud);
-//    init_shot(world, sprite_sheet_handle_player.clone(), 10.0, 15.0);
 //    init_level(world, sprite_sheet_handle_cloud.clone(), resources::LEVEL_ONE)
   }
 

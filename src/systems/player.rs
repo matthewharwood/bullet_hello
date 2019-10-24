@@ -36,7 +36,11 @@ impl<'s> System<'s> for PlayerSystem {
                 println!("shooting");
                 shoot(&entities,
                       &sprite,
-                      &lazy_update);
+                      &lazy_update,
+                      transform.translation().x,
+                      transform.translation().y,
+                      transform.translation().z,
+                );
             }
 
             transform.move_right(horizontal);
@@ -48,15 +52,19 @@ impl<'s> System<'s> for PlayerSystem {
 pub fn shoot(
     entities: &Entities,
     shot_resource: &ReadExpect<SpriteResource>,
-    lazy_update: &ReadExpect<LazyUpdate>) {
+    lazy_update: &ReadExpect<LazyUpdate>,
+    t_x: f32,
+    t_y: f32,
+    t_z: f32,
+) {
 
     let fired_shot: Entity = entities.create();
 
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(
-        ARENA_MIN_X + (ARENA_WIDTH / 2.0),
-        ARENA_MIN_Y + (ARENA_HEIGHT / 6.0),
-        0.9,
+        t_x,
+        t_y,
+        t_z,
     );
 
     let sprite_render = SpriteRender {
