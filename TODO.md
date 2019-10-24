@@ -7,11 +7,12 @@
 - Add custom typeface.
 
 # Doing
-- Add Menu
+
 
 
 # DONE
-
+- Player can move now
+- Add Menu
 - Make Entity Dir
 - Make Systems Dir
 - Make Componet dir

@@ -1,7 +1,7 @@
 use amethyst::{
   assets::{AssetStorage, Handle, Loader},
   core::transform::Transform,
-  ecs::prelude::{Dispatcher, DispatcherBuilder, Entity},
+  ecs::prelude::{Dispatcher, DispatcherBuilder, Entity, World},
   prelude::*,
   renderer::{
     formats::texture::ImageFormat, Camera, SpriteRender, SpriteSheet, SpriteSheetFormat, Texture,
@@ -14,9 +14,11 @@ use crate::{
   entities::init_enemy,
   entities::init_player,
   entities::init_cloud,
+  entities::init_background,
+  entities::init_shot,
 //  entities::init_level,
   systems,
-  resources,
+  resources::SpriteResource,
 };
 
 
@@ -30,6 +32,15 @@ pub const ARENA_HEIGHT: f32 = ARENA_MAX_Y - ARENA_MIN_Y;
 pub const ARENA_WIDTH: f32 = ARENA_MAX_X - ARENA_MIN_X;
 
 
+pub fn initialize_sprite_resource(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) -> SpriteResource {
+  let sprite_resource = SpriteResource {
+    sprite_sheet: sprite_sheet_handle,
+  };
+
+  world.add_resource(sprite_resource.clone());
+  sprite_resource
+}
+
 pub struct BulletHello {
   dispatcher: Dispatcher<'static, 'static>,
 }
@@ -42,9 +53,9 @@ impl Default for BulletHello {
   fn default() -> Self {
     BulletHello {
       dispatcher: DispatcherBuilder::new()
-//        .with(systems::PlayerSystem, "player_system", &[])
         .with(systems::EnemySystem, "enemy_system", &[])
         .with(systems::CloudSystem, "cloud_system", &[])
+        .with(systems::ShotSystem, "shot_system", &[])
         .build(),
     }
   }
@@ -56,11 +67,13 @@ impl SimpleState for BulletHello {
     let sprite_sheet_handle_player = load_spritesheet(world, "player.png", "player.ron");
     let sprite_sheet_handle_enemy = load_spritesheet(world, "enemy.png", "enemy.ron");
     let sprite_sheet_handle_cloud = load_spritesheet(world, "cloud.png", "cloud.ron");
+    initialize_sprite_resource(world,sprite_sheet_handle_player.clone());
     self.dispatcher.setup(&mut world.res);
     init_camera(world);
-    init_player(world, sprite_sheet_handle_player, 10.0);
+    init_player(world, sprite_sheet_handle_player.clone(), 10.0);
     init_enemy(world, sprite_sheet_handle_enemy);
     init_cloud(world, sprite_sheet_handle_cloud);
+//    init_shot(world, sprite_sheet_handle_player.clone(), 10.0, 15.0);
 //    init_level(world, sprite_sheet_handle_cloud.clone(), resources::LEVEL_ONE)
   }
 
@@ -85,6 +98,7 @@ impl Default for MenuScreen {
   fn default() -> Self {
     MenuScreen {
       dispatcher: DispatcherBuilder::new()
+          .with(systems::BackgroundSystem, "background_system", &[])
 //          .with(systems::PlayerSystem, "player_system", &[])
           .build(),
     }
@@ -96,9 +110,12 @@ impl SimpleState for MenuScreen {
   fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
     let world = data.world;
     let sprite_sheet_handle_player = load_spritesheet(world, "player.png", "player.ron");
+    let sprite_sheet_handle_bg = load_spritesheet(world, "background.png", "background.ron");
+    initialize_sprite_resource(world,sprite_sheet_handle_player.clone());
     self.dispatcher.setup(&mut world.res);
     init_camera(world);
-    init_player(world, sprite_sheet_handle_player, 5.0);
+    init_background(world, sprite_sheet_handle_bg);
+//    init_player(world, sprite_sheet_handle_player.clone(), 5.0);
   }
 
   fn on_pause(&mut self, data: StateData<GameData>) {

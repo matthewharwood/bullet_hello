@@ -20,7 +20,7 @@ pub fn init_player(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>, 
   );
 
   let sprite_render = SpriteRender {
-    sprite_sheet: sprite_sheet_handle.clone(),
+    sprite_sheet: sprite_sheet_handle,
     sprite_number: 0,
   };
 
