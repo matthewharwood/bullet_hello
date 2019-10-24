@@ -1,7 +1,5 @@
 
 # TODO
-- Adding Bullet move.
-- Adding Bullet Fire.
 - Add CD - Destroys other entity.
 - Add GameLevels.
 - Add custom typeface.
@@ -11,6 +9,8 @@
 
 
 # DONE
+- Adding Bullet move.
+- Adding Bullet Fire.
 - Player can move now
 - Add Menu
 - Make Entity Dir
