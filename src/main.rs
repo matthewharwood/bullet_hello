@@ -44,7 +44,8 @@ fn main() -> amethyst::Result<()> {
         .with_bundle(TransformBundle::new())?
         .with_bundle(input_bundle)?
         .with(systems::ShotSystem, "shot_system", &[])
-        .with(systems::PlayerSystem, "player_system", &[]);
+        .with(systems::PlayerSystem, "player_system", &[])
+        .with(systems::ShotCollisionSystem, "shot_collision_system", &[]);
 
 
     let mut game = Application::build(assets_path, MenuScreen::default())?.build(game_data)?;

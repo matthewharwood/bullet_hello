@@ -3,6 +3,7 @@ mod enemy;
 mod cloud;
 mod background;
 mod shot;
+mod shot_collision;
 //mod level;
 
 pub use self::{
@@ -11,5 +12,6 @@ pub use self::{
     player::PlayerSystem,
     background::BackgroundSystem,
     shot::ShotSystem,
+    shot_collision::ShotCollisionSystem,
 //    level::LevelSystem,
 };
