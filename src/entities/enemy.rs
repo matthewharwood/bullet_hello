@@ -8,14 +8,14 @@ use amethyst::{
 
 use crate::{
   bullet_hello::{ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH},
-  components::Player,
+  components::Enemy,
 };
 
-pub fn init_player(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>, x: f32) {
+pub fn init_enemy(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
   let mut local_transform = Transform::default();
   local_transform.set_translation_xyz(
-    ARENA_MIN_X + x + (ARENA_WIDTH / 2.0),
-    ARENA_MIN_Y + (ARENA_HEIGHT / 6.0),
+    ARENA_MIN_X + (ARENA_WIDTH / 2.0),
+    ARENA_MIN_Y + (ARENA_HEIGHT / 2.0),
     0.9,
   );
 
@@ -27,9 +27,9 @@ pub fn init_player(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>, 
   world
     .create_entity()
     .with(sprite_render)
-    .with(Player {
+    .with(Enemy {
       width: 10.0,
-      height: 10.0
+      height: 10.0,
     })
     .with(local_transform)
     .with(Transparent)

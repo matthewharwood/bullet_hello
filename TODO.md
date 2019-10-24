@@ -1,13 +1,14 @@
+
 # TODO
+- Adding Bullet move.
+- Adding Bullet Fire.
+- Add CD - Destroys other entity.
+- Add GameLevels.
+- Add custom typeface.
 
-- Add Player
+# Doing
+- Add Menu
 
-* Add GameLevels
-* Add Enemy
-* Add Bullet
-* Add CD
-* Add Menu
-* Add custom typeface
 
 # DONE
 
@@ -16,3 +17,17 @@
 - Make Componet dir
 - Make bullet_hello.rs
 - Mk resource dir
+- Add Player
+- Add Enemy
+- Add Bullet
+
+
+Making Level Editor:
+- Break the viewport into a
+
+Background:
+1 - Structured level - Entities (starting postion)
+2 - Move camera within the level scroll effect
+
+Foreground:
+1 - Entities are independant after bootstrap

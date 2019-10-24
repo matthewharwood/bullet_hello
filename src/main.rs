@@ -1,6 +1,6 @@
 use amethyst::{
     core::transform::TransformBundle,
-    // ecs::prelude::{ReadExpect, Resources, SystemData},
+    input::{InputBundle, StringBindings},
     prelude::*,
     renderer::{
         plugins::{RenderFlat2D, RenderToWindow},
@@ -13,11 +13,12 @@ use amethyst::{
 
 pub mod components;
 pub mod systems;
-// pub mod resources;
-mod bullet_hello;
+pub mod resources;
 pub mod entities;
 
-use crate::bullet_hello::BulletHello;
+mod bullet_hello;
+
+use crate::bullet_hello::{MenuScreen};
 
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
@@ -26,6 +27,10 @@ fn main() -> amethyst::Result<()> {
     let assets_path = app_root.join("assets");
     let config_dir = app_root.join("config");
     let display_config_path = config_dir.join("display.ron");
+    let bindings_config = config_dir.join("bindings.ron");
+
+    let input_bundle = InputBundle::<StringBindings>::new()
+        .with_bindings_from_file(bindings_config)?;
 
     let game_data = GameDataBuilder::default()
         .with_bundle(
@@ -36,9 +41,11 @@ fn main() -> amethyst::Result<()> {
                 )
                 .with_plugin(RenderFlat2D::default()),
         )?
-        .with_bundle(TransformBundle::new())?;
+        .with_bundle(TransformBundle::new())?
+        .with_bundle(input_bundle)?
+        .with(systems::PlayerSystem, "player_system", &["input_system"]);
 
-    let mut game = Application::build(assets_path, BulletHello::default())?.build(game_data)?;
+    let mut game = Application::build(assets_path, MenuScreen::default())?.build(game_data)?;
     game.run();
 
     Ok(())
