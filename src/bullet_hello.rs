@@ -70,7 +70,11 @@ impl SimpleState for BulletHello {
     self.dispatcher.setup(&mut world.res);
     init_camera(world);
     init_player(world, sprite_sheet_handle_player.clone(), 10.0);
-    init_enemy(world, sprite_sheet_handle_enemy);
+    for x in 0..10 {
+      let y = x * 100;
+      init_enemy(world, sprite_sheet_handle_enemy.clone(), &y);
+    }
+
     init_cloud(world, sprite_sheet_handle_cloud);
 //    init_level(world, sprite_sheet_handle_cloud.clone(), resources::LEVEL_ONE)
   }

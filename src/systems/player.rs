@@ -9,7 +9,7 @@ use amethyst::{
 
 use crate::{
     components::{Player, Shot},
-    bullet_hello::{ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH},
+    bullet_hello::{ARENA_HEIGHT, ARENA_MIN_X, ARENA_MIN_Y, ARENA_WIDTH, GAME_HEIGHT},
     resources::SpriteResource,
 };
 
@@ -29,9 +29,9 @@ impl<'s> System<'s> for PlayerSystem {
     fn run(&mut self, (mut transforms, players, input, entities, sprite, lazy_update): Self::SystemData) {
         for (player, transform) in (&players, &mut transforms).join() {
             let horizontal = input.axis_value("horizontal").unwrap_or(0.0);
-            let vertical = input.axis_value("vertical").unwrap_or(0.0);
+            let vertical = input.axis_value("vertical");
             let shooting_action = input.action_is_down("shoot").unwrap_or(false);
-
+            println!("Translate: {:?}", transform.translation().y);
             if shooting_action {
                 println!("shooting");
                 shoot(&entities,
@@ -44,7 +44,15 @@ impl<'s> System<'s> for PlayerSystem {
             }
 
             transform.move_right(horizontal);
-            transform.move_up(vertical);
+            if let Some(mv_amount) = vertical {
+                let scaled_amount = 1.2 * mv_amount as f32;
+                let player_y = transform.translation().y;
+                transform.set_translation_y(
+                    (player_y + scaled_amount)
+                        .min(GAME_HEIGHT * 1.2)
+                        .max(0.0 - GAME_HEIGHT * 1.2),
+                );
+            }
         }
     }
 }

@@ -11,11 +11,11 @@ use crate::{
   components::Enemy,
 };
 
-pub fn init_enemy(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>) {
+pub fn init_enemy(world: &mut World, sprite_sheet_handle: Handle<SpriteSheet>, y: &i32) {
   let mut local_transform = Transform::default();
   local_transform.set_translation_xyz(
-    ARENA_MIN_X + (ARENA_WIDTH / 2.0),
-    ARENA_MIN_Y + (ARENA_HEIGHT / 2.0),
+    ARENA_MIN_X +  (ARENA_WIDTH / 2.0),
+    ARENA_MIN_Y + (*y as f32) + (ARENA_HEIGHT / 2.0),
     0.9,
   );
 
