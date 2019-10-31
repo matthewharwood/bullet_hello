@@ -1,6 +1,13 @@
 
 # TODO
-- Add CD - Destroys other entity.
+- Animating the camera
+- Enemy system
+-- Enemy Movements
+-- Enemy Shots
+- Sprite Animations
+- Sounds Design
+- UI Design
+-
 - Add GameLevels.
 - Add custom typeface.
 
@@ -9,6 +16,7 @@
 
 
 # DONE
+- Add CD - Destroys other entity.
 - Adding Bullet move.
 - Adding Bullet Fire.
 - Player can move now

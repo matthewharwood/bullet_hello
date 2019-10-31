@@ -71,7 +71,7 @@ pub fn shoot(
         sprite_sheet: shot_resource.sprite_sheet.clone(),
         sprite_number: 1,
     };
-    println!("shots fired");
+
     lazy_update.insert(fired_shot, sprite_render);
     lazy_update.insert(fired_shot, Shot {
         width: 20.0,
@@ -83,5 +83,4 @@ pub fn shoot(
     });
     lazy_update.insert(fired_shot, local_transform);
     lazy_update.insert(fired_shot, Transparent);
-
 }
